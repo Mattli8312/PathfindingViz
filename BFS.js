@@ -7,7 +7,7 @@
  * @param {*} frequency_w 
  * @param {*} frequency_h 
  */
-async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, frequency_h){
+ async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, frequency_h){
 
     let curr_x = start_x, curr_y = start_y;
 
@@ -38,6 +38,9 @@ async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, freque
 
         curr_x = curr_path[0][0], curr_y = curr_path[0][1]
 
+        console.log("Implementing")
+        console.log("yes")
+
         let curr_tile = document.getElementById(curr_x + ',' + curr_y)
 
         if(curr_x != start_x || curr_y != start_y){
@@ -45,7 +48,7 @@ async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, freque
             curr_tile.style.background = "cyan"
 
         }
-        
+
         if(curr_x == end_x && curr_y == end_y){
 
             break;
@@ -76,7 +79,7 @@ async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, freque
 
                 BFS_queue.push([curr_x + delta_x[a], curr_y + delta_y[a]]);
 
-                neighbor.setAttribute("visited", "true")
+                neighbor.setAttribute("visited", "true");
 
                 neighbor.setAttribute("prevx", curr_x);
 
@@ -89,10 +92,14 @@ async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, freque
     }
 
     while(curr_x != start_x || curr_y != start_y){
-        curr_tile = document.getElementById(curr_x + ',' + curr_y);
-        curr_tile.style.background = "purple"
-        curr_x = parseInt(curr_tile.getAttribute("prevx"));
-        curr_y = parseInt(curr_tile.getAttribute("prevy"));
+
+        let curr_tile = document.getElementById(curr_x + ',' + curr_y);
+        
+        if(curr_x != end_x || curr_y != end_y){
+            curr_tile.style.background = "yellow"
+        }
+        curr_x = parseInt(curr_tile.getAttribute("prevx")), curr_y = parseInt(curr_tile.getAttribute("prevy"));
+
     }
 
 }
