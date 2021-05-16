@@ -85,8 +85,6 @@ function initialize_grid(){
 
                 start_x = parseInt(tile.getAttribute("x")); start_y = parseInt(tile.getAttribute("y"));
     
-                current_state = state.DRAW_WALL_BREAKS
-    
             }
             else if(current_state == state.DRAW_END){
 
