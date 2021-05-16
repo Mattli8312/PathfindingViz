@@ -16,9 +16,9 @@ async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, freque
      * (-1, 0)        (1, 0)
      * (-1, 1),(0, 1),(1, 1)
      */
-    let delta_x = [-1,0,1,-1,1,-1,0,1];
+    let delta_x = [0,1,0,-1,-1,1,1,-1];
 
-    let delta_y = [-1,-1,-1,0,0,1,1,1];
+    let delta_y = [1,0,1,0,-1,-1,1,1];
 
     let BFS_queue = [[curr_x, curr_y]];
 
@@ -28,7 +28,10 @@ async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, freque
 
     for(var a = 0; a < frequency_h; a++){
         for(var b = 0; b < frequency_w; b++){
-            document.getElementById(b + ',' + a).setAttribute("visited", "false");
+            let curr_tile = document.getElementById(b + ',' + a)
+            curr_tile.setAttribute("visited", "false");
+            if(curr_tile.getAttribute("type") == "space")
+                curr_tile.style.background = "white"
         }
     }
 
@@ -88,11 +91,29 @@ async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, freque
 
     }
 
+    let final_path = [];
+
     while(curr_x != start_x || curr_y != start_y){
-        curr_tile = document.getElementById(curr_x + ',' + curr_y);
-        curr_tile.style.background = "purple"
+
+        final_path.push([curr_x, curr_y]);
+
+        let curr_tile = document.getElementById(curr_x + ',' + curr_y);
+
         curr_x = parseInt(curr_tile.getAttribute("prevx"));
+
         curr_y = parseInt(curr_tile.getAttribute("prevy"));
+    }
+
+    document.getElementById(end_x + ',' + end_y).style.background = "red"
+
+    for(var a = final_path.length - 1; a > 0; a--){
+
+        let curr_tile = document.getElementById(final_path[a][0] + ',' + final_path[a][1]);
+        
+        await wait(20);
+
+        curr_tile.style.background = "purple"
+
     }
 
 }
