@@ -1,5 +1,5 @@
 /**
- * Simple implementatio of BFS on a 2d grid
+ * Simple implementatio of DFS on a 2d grid
  * @param {*} start_x 
  * @param {*} start_y 
  * @param {*} end_x 
@@ -7,7 +7,7 @@
  * @param {*} frequency_w 
  * @param {*} frequency_h 
  */
-async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, frequency_h){
+ async function DFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, frequency_h){
 
     let curr_x = start_x, curr_y = start_y;
 
@@ -16,32 +16,39 @@ async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, freque
      * (-1, 0)        (1, 0)
      * (-1, 1),(0, 1),(1, 1)
      */
-    let delta_x = [0,1,0,-1,-1,1,1,-1];
+    let delta_x = [0,1,0,-1];
 
-    let delta_y = [1,0,-1,0,-1,-1,1,1];
+    let delta_y = [1,0,-1,0];
 
-    let BFS_queue = [[curr_x, curr_y]];
+    let DFS_Stack = [[curr_x, curr_y]];
 
     /**
      * Initialize 2d visited array to zeros 
      */
 
     for(var a = 0; a < frequency_h; a++){
+
         for(var b = 0; b < frequency_w; b++){
+
             let curr_tile = document.getElementById(b + ',' + a)
+
             curr_tile.setAttribute("visited", "false");
+
             if(curr_tile.getAttribute("type") == "space")
+
                 curr_tile.style.background = "white"
         }
     }
 
-    while(BFS_queue.length > 0){
+    while(DFS_Stack.length > 0){
 
-        let curr_path = BFS_queue.splice(0, 1);
+        let curr_path = DFS_Stack.pop()
 
-        curr_x = curr_path[0][0], curr_y = curr_path[0][1]
+        curr_x = curr_path[0], curr_y = curr_path[1]
 
         let curr_tile = document.getElementById(curr_x + ',' + curr_y)
+
+        curr_tile.setAttribute("visited", "true")
 
         if(curr_x != start_x || curr_y != start_y){
         
@@ -55,7 +62,7 @@ async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, freque
 
         }
 
-        for(var a = 0; a < 8; a++){
+        for(var a = 0; a < 4; a++){
 
             if(curr_x + delta_x[a] < 0 || curr_x + delta_x[a] >= frequency_w){
                 continue;
@@ -77,9 +84,7 @@ async function BFS_Traversal(start_x, start_y, end_x, end_y, frequency_w, freque
 
                 await wait(10);
 
-                BFS_queue.push([curr_x + delta_x[a], curr_y + delta_y[a]]);
-
-                neighbor.setAttribute("visited", "true")
+                DFS_Stack.push([curr_x + delta_x[a], curr_y + delta_y[a]]);
 
                 neighbor.setAttribute("prevx", curr_x);
 
