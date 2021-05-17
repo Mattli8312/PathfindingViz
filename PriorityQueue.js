@@ -31,6 +31,9 @@ class PriorityQueue{
         if(this.queue.length > 0)
             return this.queue[0];
     }
+    Size(){
+        return this.queue.length;
+    }
 }
 
 class Node{
