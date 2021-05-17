@@ -16,9 +16,9 @@
      * (-1, 0)        (1, 0)
      * (-1, 1),(0, 1),(1, 1)
      */
-    let delta_x = [0,1,0,-1];
+    let delta_x = [-1,1,1,-1,-1,1,0,-1];
 
-    let delta_y = [1,0,-1,0];
+    let delta_y = [-1,-1,1,1,1,0,-1,0];
 
     let DFS_Stack = [[curr_x, curr_y]];
 
@@ -62,7 +62,7 @@
 
         }
 
-        for(var a = 0; a < 4; a++){
+        for(var a = 0; a < 8; a++){
 
             if(curr_x + delta_x[a] < 0 || curr_x + delta_x[a] >= frequency_w){
                 continue;
