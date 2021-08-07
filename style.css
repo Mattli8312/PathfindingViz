@@ -1,0 +1,26 @@
+*{
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    color: white;
+    background: black;
+}
+#grid{
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+#nav{
+    display: flex;
+    justify-content: center; align-items: center;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 2.5em;
+    padding: 1em;
+}
+div[type="tile"]{
+    cursor: pointer;
+    transition: ease-in-out 0.4s;
+}
+div[type="tile"]:hover{
+    background: cyan;
+    border-radius: 20%;
+}
