@@ -17,24 +17,33 @@ let start = {
  */
 function ClearPixels(){
     for(const p of prev_pixels){
-        p.attr('type', 'tile');
+        for(const c of p){
+            c.attr('type','tile');
+        }
     }
     prev_pixels = [];
 }
 
 function DrawRectangle(){
+    /**Render Quadrant 4 */
     for(let i = start.y; i <= mouse.y; i++){
+        let temp = [];
         for(let j = start.x; j <= mouse.x; j++){
-            if(!i || !j || i == mouse.y || j == mouse.x){
-                prev_pixels.push($('#'+i+'a'+j));
+            if(i==start.y || j==start.x || i === mouse.y || j === mouse.x){
+                if($('#'+i+'a'+j).attr('type') == 'tile'){
+                    temp.push($('#'+i+'a'+j));
+                }
             }
         }
+        prev_pixels.push(temp);
     }
 }
 
 function RenderPixels(){
     for(const p of prev_pixels){
-        p.attr('type','wall');
+        for(const c of p){
+            c.attr('type','wall');
+        }
     }
 }
 

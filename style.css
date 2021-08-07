@@ -1,5 +1,6 @@
 *{
     margin: 0; padding: 0;
+    font-family:Georgia, 'Times New Roman', Times, serif;
     box-sizing: border-box;
 }
 #grid{
@@ -10,7 +11,6 @@
 #nav{
     display: flex;
     justify-content: center; align-items: center;
-    font-family:Georgia, 'Times New Roman', Times, serif;
     font-size: 2.5em;
     padding: 1em;
     color: white;
