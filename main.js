@@ -11,9 +11,15 @@ function InitializeGrid(){
     for(let a = 0; a < height*2 + 1; a++){
         for(let b = 0; b < width*2 + 1; b++){
             let y_ = a, x_ = b;
-            let tile = $("<div type=tile></div>").attr('id', y_,'a',x_);
+            let tile = $("<div type=tile></div>").attr('id', y_+'a'+x_);
             tile.width(cellSize); tile.height(cellSize);
-            tile.on("mouseover", ()=>{ if(mouse_down) tile.attr('type','wall')})
+            tile.on("mouseover", ()=>{ 
+                if(mouse_down && current_draw_mode == "scattered") 
+                    tile.attr('type','wall')
+                mouse.x = x_;
+                mouse.y = y_;
+                }
+            )
             $('#grid').append(tile);
         }
     }

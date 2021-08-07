@@ -28,13 +28,9 @@ button[type="button_a"]:hover {
     background: black;
     color: white;
 }
-div{
-    transition: all 0.5s ease;
-}
 div[type="tile"]{
     cursor: pointer;
     border: 1px solid black;
-    transition: ease-in-out 0.4s;
 }
 div[type="wall"]{
     background: black;
