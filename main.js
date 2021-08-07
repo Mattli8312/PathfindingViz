@@ -1,22 +1,27 @@
 const grid = document.getElementById("grid");
 const cellSize = 20;
 const width = 36, height = 15;
-function InitializeGrid(){
-    for(var a = 0; a < height*2 + 1; a++){
-        for(var b = 0; b < width*2 + 1; b++){
-            var tile = document.createElement("div");
-            tile.setAttribute("type", "tile");
-            tile.setAttribute("id", a + ',' + b);
-            tile.style.width = cellSize;
-            tile.style.height = cellSize;
-            grid.style.width = width*2*cellSize + cellSize;
-            grid.style.height = height*2*cellSize + cellSize;
-            grid.appendChild(tile);
-        }
-    }
+
+let mouse = {
+    x: -1,
+    y: -1
 }
 
-var maze_ = new Maze(width, height);
+function InitializeGrid(){
+    for(let a = 0; a < height*2 + 1; a++){
+        for(let b = 0; b < width*2 + 1; b++){
+            let y_ = a, x_ = b;
+            let tile = $("<div type=tile></div>").attr('id', y_,'a',x_);
+            tile.width(cellSize); tile.height(cellSize);
+            tile.on("mouseover", ()=>{ if(mouse_down) tile.attr('type','wall')})
+            $('#grid').append(tile);
+        }
+    }
+    grid.style.width = width*2*cellSize + cellSize;
+    grid.style.height = height*2*cellSize + cellSize;
+}
+
+let maze_ = new Maze(width, height);
 maze_.Initialize(); maze_.GenerateMazeRandom();
 function main(){
     InitializeGrid();

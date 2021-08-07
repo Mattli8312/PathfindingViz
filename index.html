@@ -4,15 +4,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>PathfindingViz</title>
 </head>
 <body>
     <div id="nav">
         <div id="title">PathfindingViz</div>
-        <div id="mazeGenerator"></div>
+        <button type="button_a" onclick="current_draw_mode = 'square'">Draw Square</button>
     </div>
     <div id="grid"></div>
-    <script src="./Maze/maze.js"></script>
+    <script src="./Components/maze.js"></script>
+    <script src="./Components/Walls.js"></script>
     <script src="main.js"></script>
 </body>
 </html>

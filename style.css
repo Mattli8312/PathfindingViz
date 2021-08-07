@@ -1,7 +1,6 @@
 *{
     margin: 0; padding: 0;
     box-sizing: border-box;
-    color: white;
 }
 #grid{
     margin: auto;
@@ -14,14 +13,29 @@
     font-family:Georgia, 'Times New Roman', Times, serif;
     font-size: 2.5em;
     padding: 1em;
+    color: white;
     background: black;
+}
+button[type="button_a"]{
+    padding: 1em;
+    border-radius: 10%;
+    margin: 0 1em;
+    border-style: none;
+    cursor:pointer;
+    transition: 0.5s ease;
+}
+button[type="button_a"]:hover {
+    background: black;
+    color: white;
+}
+div{
+    transition: all 0.5s ease;
 }
 div[type="tile"]{
     cursor: pointer;
     border: 1px solid black;
     transition: ease-in-out 0.4s;
 }
-div[type="tile"]:hover{
-    background: cyan;
-    border-radius: 20%;
+div[type="wall"]{
+    background: black;
 }
