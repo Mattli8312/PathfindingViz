@@ -10,8 +10,7 @@
     flex-wrap: wrap;
 }
 #nav{
-    display: flex;
-    justify-content: center; align-items: center;
+    display: flex;align-items: center;
     font-size: 2.5em;
     padding: 1em;
     color: white;
@@ -35,5 +34,6 @@ div[type="tile"]{
     background: white;
 }
 div[type="wall"]{
+    cursor: pointer;
     background: black;
 }

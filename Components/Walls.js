@@ -43,6 +43,9 @@ function DrawRectangle(){
     }
 }
 
+/**
+ * Function used to draw dynamically resizable line
+ */
 function DrawLine(){
 
     /**Initialize entry points */
@@ -52,24 +55,38 @@ function DrawLine(){
     let i_f = i_o == start.y ? mouse.y : start.y;
     let j_f = j_o == start.x ? mouse.x : start.x;
 
-    for(let i = i_o; i <= i_f; i++){
-        for(let j = j_o; j<= j_f; j++){
-            //y = m*x + b: 
-            let bound = (i_o - i_f) < (j_o - j_f) ? (j_f - j_o) / (i_f - i_o) * i + j_o : (i_f - i_o) / (j_f - j_o) * j + i_o;
-            let curr = (i_o - i_f) < (j_o - j_f) ? j : i;
-            if((bound >= curr && bound < curr + 1)){
-                if($('#'+i+'a'+j).attr('type') == 'tile'){
-                    prev_pixels.push($('#'+i+'a'+j));
-                }
-            }
+    m = (i_f - i_o)/(j_f - j_o);
+    /**Bresenham Line algorithm */
+    if(i_f - i_o  < j_f - j_o){
+        for(let j = 0; j <= (j_f-j_o); j++){
+            y = Math.round(m * j);
+            if($('#'+y+'a'+(j+j_o)).attr('type') == 'tile')
+                prev_pixels.push($('#'+(y+i_o)+'a'+(j+j_o)))
+        }
+    }
+    else{
+        m = (j_f - j_o)/(i_f - i_o);
+        for(let i = 0; i <= (i_f-i_o); i++){
+            x = Math.round(m * i);
+            if($('#'+(i+i_o)+'a'+x).attr('type') == 'tile')
+                prev_pixels.push($('#'+(i+i_o)+'a'+(x+j_o)));
         }
     }
 }
 
+function RandomWalls(density = 0.3){
+    ClearBoard();
+    for(let i = 0; i < height*2+1; i++){
+        for(let j = 0; j < width*2+1; j++){
+            if(Math.round(Math.random()*10)/10 <= density){
+                $('#'+i+'a'+j).attr('type','wall');
+            }
+        }
+    }
+}
 /**
  * Renders pixels specified by the shape methods
  */
-
 function RenderPixels(){
     for(const p of prev_pixels){
         p.attr('type','wall');
@@ -107,6 +124,9 @@ window.addEventListener("mousemove", ()=> {
                 ClearPixels();
                 DrawLine();
                 RenderPixels();
+                break;
+            case "erase":
+                $('#'+mouse.y+'a'+mouse.x).attr('type','tile');
                 break;
             default:
                 start.x = start.y = -1;
