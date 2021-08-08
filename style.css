@@ -28,13 +28,10 @@ button[type="button_a"]:hover {
     background: var(--backgroundcolor);
     color: white;
 }
-div[type="tile"]{
+div[type="tile"],div[type="visited"]{
     cursor: pointer;
     border: 1px solid black;
     background: white;
-}
-div[type="visited"]{
-    background: red;
 }
 div[type="wall"]{
     cursor: pointer;

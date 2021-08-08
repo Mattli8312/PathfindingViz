@@ -15,6 +15,7 @@ function InitializeAllWalls(){
         }
     }
 }
+
 /**Maze generator utility functions */
 
 function validDivIndx(i,j){
@@ -29,9 +30,10 @@ function RenderEightWalls(i,j){
     }
 }
 
+/** Maze Generation using Depth-First Search (iterative approach) */
 async function GenerateMaze_DFS(){
     //InitializeAllWalls();
-    let x = 5, y = 5;
+    let x = 1, y = 1;
     let stack = [];
     let delx = [-2,0,2,0];
     let dely = [0,2,0,-2];
@@ -67,6 +69,40 @@ async function GenerateMaze_DFS(){
         }
     }
     $('[type=visited]').attr('type','tile');
+}
+
+async function GenerateMaze_Prims(){
+    let x = Math.floor(Math.random() * width)*2+1;
+    let y = Math.floor(Math.random() * height)*2+1;
+    let dx = [-2,0,2,0], dy = [0,2,0,-2];
+    let set = [[y,x]];
+    while(set.length > 0){
+        let indx = Math.floor(Math.random()*set.length)
+        let curr = set[indx]; //pick random element in the set
+        set.splice(indx,1);
+        if($('#'+curr[0]+'a'+curr[1]).attr('type')!='visited'){
+            RenderEightWalls(curr[0],curr[1]);
+        }
+        else{
+            continue;
+        }
+        $('#'+curr[0]+'a'+curr[1]).attr('type','visited');
+        //Carve out the walls
+        switch(curr[2]){
+            case 0: $('#'+(curr[0])+'a'+(curr[1]+1)).attr('type','visited'); break;
+            case 2: $('#'+(curr[0])+'a'+(curr[1]-1)).attr('type','visited'); break;
+            case 1: $('#'+(curr[0]-1)+'a'+(curr[1])).attr('type','visited'); break;
+            default: $('#'+(curr[0]+1)+'a'+(curr[1])).attr('type','visited');break;
+        }
+        //analyze options
+        for(let i = 0; i < 4; i++){
+            let curr_div = $('#'+(curr[0]+dy[i])+'a'+(curr[1]+dx[i]))
+            if(validDivIndx(curr[0]+dy[i],curr[1]+dx[i]) && curr_div.attr('type') != 'visited'){
+                set.push([curr[0]+dy[i],curr[1]+dx[i],i]);
+            }
+        }
+        await new Promise(resolve => setTimeout(resolve, 50));
+    }
 }
 
 //await new Promise(resolve => setTimeout(resolve, 50));
