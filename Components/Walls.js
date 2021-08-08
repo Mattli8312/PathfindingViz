@@ -17,34 +17,73 @@ let start = {
  */
 function ClearPixels(){
     for(const p of prev_pixels){
-        for(const c of p){
-            c.attr('type','tile');
-        }
+        p.attr('type','tile');
     }
     prev_pixels = [];
 }
-
+/**
+ * Draws Dynamically Sizeable rectangle
+ */
 function DrawRectangle(){
-    /**Render Quadrant 4 */
-    for(let i = start.y; i <= mouse.y; i++){
-        let temp = [];
-        for(let j = start.x; j <= mouse.x; j++){
-            if(i==start.y || j==start.x || i === mouse.y || j === mouse.x){
+    /**Render All Four Quadrants*/
+    /**Initialize entry points */
+    let i_o = start.y < mouse.y ? start.y : mouse.y; 
+    let j_o = start.x < mouse.x ? start.x : mouse.x;
+    let i_f = i_o == start.y ? mouse.y : start.y;
+    let j_f = j_o == start.x ? mouse.x : start.x;
+
+    for(let i = i_o; i <= i_f; i++){
+        for(let j = j_o; j <= j_f; j++){
+            if(i==i_o || j==j_o || i ==i_f || j == j_f){
                 if($('#'+i+'a'+j).attr('type') == 'tile'){
-                    temp.push($('#'+i+'a'+j));
+                    prev_pixels.push($('#'+i+'a'+j));
                 }
             }
         }
-        prev_pixels.push(temp);
     }
 }
 
-function RenderPixels(){
-    for(const p of prev_pixels){
-        for(const c of p){
-            c.attr('type','wall');
+function DrawLine(){
+
+    /**Initialize entry points */
+
+    let i_o = start.y < mouse.y ? start.y : mouse.y; 
+    let j_o = start.x < mouse.x ? start.x : mouse.x;
+    let i_f = i_o == start.y ? mouse.y : start.y;
+    let j_f = j_o == start.x ? mouse.x : start.x;
+
+    for(let i = i_o; i <= i_f; i++){
+        for(let j = j_o; j<= j_f; j++){
+            //y = m*x + b: 
+            let bound = (i_o - i_f) < (j_o - j_f) ? (j_f - j_o) / (i_f - i_o) * i + j_o : (i_f - i_o) / (j_f - j_o) * j + i_o;
+            let curr = (i_o - i_f) < (j_o - j_f) ? j : i;
+            if((bound >= curr && bound < curr + 1)){
+                if($('#'+i+'a'+j).attr('type') == 'tile'){
+                    prev_pixels.push($('#'+i+'a'+j));
+                }
+            }
         }
     }
+}
+
+/**
+ * Renders pixels specified by the shape methods
+ */
+
+function RenderPixels(){
+    for(const p of prev_pixels){
+        p.attr('type','wall');
+    }
+}
+
+/**
+ * Clears all the walls in the grid
+ */
+
+function ClearBoard(){
+    /**Simple JQuery Call */
+    $('[type=wall]').attr('type','tile');
+
 }
 
 window.addEventListener("mousedown", ()=>{
@@ -53,18 +92,21 @@ window.addEventListener("mousedown", ()=>{
 
 window.addEventListener("mousemove", ()=> {
     if(mouse_down){
+        if(current_draw_mode != 'scattered' && start.x < 0){
+            start.x = mouse.x,
+            start.y = mouse.y
+            console.log(start.y,start.x);
+        }
         switch(current_draw_mode){
             case "square":
-                if(start.x < 0){
-                    start.x = mouse.x,
-                    start.y = mouse.y
-                    console.log(start.y,start.x);
-                }
-                else{
-                    ClearPixels();
-                    DrawRectangle();
-                    RenderPixels();
-                }
+                ClearPixels();
+                DrawRectangle();
+                RenderPixels();
+                break;
+            case "line":
+                ClearPixels();
+                DrawLine();
+                RenderPixels();
                 break;
             default:
                 start.x = start.y = -1;
