@@ -33,6 +33,9 @@ div[type="tile"]{
     border: 1px solid black;
     background: white;
 }
+div[type="visited"]{
+    background: red;
+}
 div[type="wall"]{
     cursor: pointer;
     background: black;

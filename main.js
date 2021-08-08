@@ -27,8 +27,6 @@ function InitializeGrid(){
     grid.style.height = height*2*cellSize + cellSize;
 }
 
-let maze_ = new Maze(width, height);
-maze_.Initialize(); maze_.GenerateMazeRandom();
 function main(){
     InitializeGrid();
 }
