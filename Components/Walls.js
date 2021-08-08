@@ -47,7 +47,7 @@ function DrawRectangle(){
  * Function used to draw dynamically resizable line
  * This code was made possible thanks to https://jstutorial.medium.com/how-to-code-your-first-algorithm-draw-a-line-ca121f9a1395
  */
- let draw_line = (x1, y1, x2, y2) => {
+function DrawLine(x1, y1, x2, y2){
     let x, y, dx, dy, dx1, dy1, px, py, xe, ye, i;
     dx = x2 - x1;
     dy = y2 - y1;
@@ -61,7 +61,8 @@ function DrawRectangle(){
         } else {
             x = x2; y = y2; xe = x1;
         }
-        prev_pixels.push($('#'+y+'a'+x));
+        if($('#'+y+'a'+x).attr('type') == 'tile')
+            prev_pixels.push($('#'+y+'a'+x));
         for (i = 0; x < xe; i++) {
             x = x + 1;
             if (px < 0) {
@@ -74,7 +75,8 @@ function DrawRectangle(){
                 }
                 px = px + 2 * (dy1 - dx1);
             }
-            prev_pixels.push($('#'+y+'a'+x));
+            if($('#'+y+'a'+x).attr('type') == 'tile')
+                prev_pixels.push($('#'+y+'a'+x));
         }
     } else {
         if (dy >= 0) {
@@ -82,7 +84,8 @@ function DrawRectangle(){
         } else { 
             x = x2; y = y2; ye = y1;
         }
-        prev_pixels.push($('#'+y+'a'+x));
+        if($('#'+y+'a'+x).attr('type') == 'tile')
+            prev_pixels.push($('#'+y+'a'+x));
         for (i = 0; y < ye; i++) {
             y = y + 1;
             if (py <= 0) {
@@ -95,13 +98,46 @@ function DrawRectangle(){
                 }
                 py = py + 2 * (dx1 - dy1);
             }
-            prev_pixels.push($('#'+y+'a'+x));
+            if($('#'+y+'a'+x).attr('type') == 'tile')
+                prev_pixels.push($('#'+y+'a'+x));
         }
     }
- }
+}
+
+ /**Draws all eight quadrant points with respect to the given point */
+function DrawEightPoints(xc,x,yc,y){
+    let delx = [x,-x,x,-x,y,-y,y,-y];
+    let dely = [y,y,-y,-y,x,x,-x,-x];
+    for(let i = 0; i < 8; i++){
+        if($('#'+(xc + delx[i]) + 'a'+(yc + dely[i])).attr('type') == 'tile')
+            prev_pixels.push($('#'+(xc + delx[i]) + 'a'+(yc + dely[i])));
+    }
+}
 
 /**Function that renders a circle using Bresenham's approach */
+function DrawCircle(xc, yc, r){
+    /**@todo */
+    let x = 0;
+    let y = r;
+    let d = 3 - 2 * r;
+    DrawEightPoints(xc,x,yc,y);
+    while(y >= x) //While we're only looking at degrees from 45-90
+    {
+        x++;
+        if(d > 0){
+            y--;
+            d += 4 * (x-y) + 10;
+        }
+        else{
+            d += 4 * x + 6;
+        }
+        DrawEightPoints(xc,x,yc,y);
+    }
+}
 
+function DrawTriangle(){
+    /**@todo */
+}
 /**
  * Function that renders randomized walls dependent on the input density
  */
@@ -146,16 +182,16 @@ window.addEventListener("mousemove", ()=> {
             start.y = mouse.y
             console.log(start.y,start.x);
         }
+        ClearPixels();
         switch(current_draw_mode){
             case "square":
-                ClearPixels();
                 DrawRectangle();
-                RenderPixels();
                 break;
             case "line":
-                ClearPixels();
-                draw_line(mouse.x,mouse.y,start.x,start.y);
-                RenderPixels();
+                DrawLine(mouse.x,mouse.y,start.x,start.y);
+                break;
+            case "circle":
+                DrawCircle(start.y,start.x,Math.max(Math.abs(start.x-mouse.x),Math.abs(start.y-mouse.y)));
                 break;
             case "erase":
                 $('#'+mouse.y+'a'+mouse.x).attr('type','tile');
@@ -164,6 +200,7 @@ window.addEventListener("mousemove", ()=> {
                 start.x = start.y = -1;
                 break;
         }
+        RenderPixels();
     }
 })
 
