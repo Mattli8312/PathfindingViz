@@ -45,34 +45,66 @@ function DrawRectangle(){
 
 /**
  * Function used to draw dynamically resizable line
+ * This code was made possible thanks to https://jstutorial.medium.com/how-to-code-your-first-algorithm-draw-a-line-ca121f9a1395
  */
-function DrawLine(){
-
-    /**Initialize entry points */
-
-    let i_o = start.y < mouse.y ? start.y : mouse.y; 
-    let j_o = start.x < mouse.x ? start.x : mouse.x;
-    let i_f = i_o == start.y ? mouse.y : start.y;
-    let j_f = j_o == start.x ? mouse.x : start.x;
-
-    m = (i_f - i_o)/(j_f - j_o);
-    /**Bresenham Line algorithm */
-    if(i_f - i_o  < j_f - j_o){
-        for(let j = 0; j <= (j_f-j_o); j++){
-            y = Math.round(m * j);
-            if($('#'+y+'a'+(j+j_o)).attr('type') == 'tile')
-                prev_pixels.push($('#'+(y+i_o)+'a'+(j+j_o)))
+ let draw_line = (x1, y1, x2, y2) => {
+    let x, y, dx, dy, dx1, dy1, px, py, xe, ye, i;
+    dx = x2 - x1;
+    dy = y2 - y1;
+    dx1 = Math.abs(dx);
+    dy1 = Math.abs(dy);
+    px = 2 * dy1 - dx1;
+    py = 2 * dx1 - dy1;
+    if (dy1 <= dx1) {
+        if (dx >= 0) {
+            x = x1; y = y1; xe = x2;
+        } else {
+            x = x2; y = y2; xe = x1;
+        }
+        prev_pixels.push($('#'+y+'a'+x));
+        for (i = 0; x < xe; i++) {
+            x = x + 1;
+            if (px < 0) {
+                px = px + 2 * dy1;
+            } else {
+                if ((dx < 0 && dy < 0) || (dx > 0 && dy > 0)) {
+                    y = y + 1;
+                } else {
+                    y = y - 1;
+                }
+                px = px + 2 * (dy1 - dx1);
+            }
+            prev_pixels.push($('#'+y+'a'+x));
+        }
+    } else {
+        if (dy >= 0) {
+            x = x1; y = y1; ye = y2;
+        } else { 
+            x = x2; y = y2; ye = y1;
+        }
+        prev_pixels.push($('#'+y+'a'+x));
+        for (i = 0; y < ye; i++) {
+            y = y + 1;
+            if (py <= 0) {
+                py = py + 2 * dx1;
+            } else {
+                if ((dx < 0 && dy<0) || (dx > 0 && dy > 0)) {
+                    x = x + 1;
+                } else {
+                    x = x - 1;
+                }
+                py = py + 2 * (dx1 - dy1);
+            }
+            prev_pixels.push($('#'+y+'a'+x));
         }
     }
-    else{
-        m = (j_f - j_o)/(i_f - i_o);
-        for(let i = 0; i <= (i_f-i_o); i++){
-            x = Math.round(m * i);
-            if($('#'+(i+i_o)+'a'+x).attr('type') == 'tile')
-                prev_pixels.push($('#'+(i+i_o)+'a'+(x+j_o)));
-        }
-    }
-}
+ }
+
+/**Function that renders a circle using Bresenham's approach */
+
+/**
+ * Function that renders randomized walls dependent on the input density
+ */
 
 function RandomWalls(density = 0.3){
     ClearBoard();
@@ -122,7 +154,7 @@ window.addEventListener("mousemove", ()=> {
                 break;
             case "line":
                 ClearPixels();
-                DrawLine();
+                draw_line(mouse.x,mouse.y,start.x,start.y);
                 RenderPixels();
                 break;
             case "erase":
