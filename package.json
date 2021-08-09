@@ -1,7 +1,7 @@
 {
   "name": "pathfindingviz",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Pathfinding visualizing UI with multple features at user's disposals",
   "main": "main.js",
   "scripts": {
     "test": "jest"
@@ -17,5 +17,7 @@
     "url": "https://github.com/Mattli8312/PathfindingViz/issues"
   },
   "homepage": "https://github.com/Mattli8312/PathfindingViz#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
 }
