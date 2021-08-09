@@ -9,16 +9,21 @@
 </head>
 <body>
     <div id="nav">
-        <div id="title">PathfindingVisualizer</div>
+        <div id="title">PathfindingVis</div>
         <button type="button_a" onclick="current_draw_mode = 'square'">Draw Rectangle</button>
         <button type="button_a" onclick="current_draw_mode = 'line'">Draw Line</button>
         <button type="button_a" onclick="current_draw_mode = 'circle'">Draw Circle</button>
         <button type="button_a" onclick="current_draw_mode = 'erase'">Erase</button>
         <button type="button_a" onclick="ClearBoard()">Clear Board</button>
         <button type="button_a" onclick="RandomWalls()">Random Walls</button>
-        <button type="button_a" onclick="GenerateMaze_DFS()">Generate Maze DFS</button>
+        <button type="button_a" onclick="GenerateMaze_DFS()">DFS</button>
+        <button type="button_a" onclick="GenerateMaze_Prims()">Prims</button>
+        <button type="button_a" onclick="GenerateMaze_Kruskals()">Kruskal</button>
+        <button type="button_a" onclick="GenerateMaze_HAK()">HAK</button>
+        <button type="button_a" onclick="GenerateMaze_Eller()">Eller</button>
     </div>
     <div id="grid"></div>
+    <script src="./Components/mazeHelper.js"></script>
     <script src="./Components/maze.js"></script>
     <script src="./Components/Walls.js"></script>
     <script src="main.js"></script>

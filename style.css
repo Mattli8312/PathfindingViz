@@ -12,7 +12,7 @@
 #nav{
     display: flex;align-items: center;
     font-size: 2.5em;
-    padding: 1em;
+    padding: 0.5em;
     color: white;
     background: var(--backgroundcolor);
 }
@@ -28,7 +28,7 @@ button[type="button_a"]:hover {
     background: var(--backgroundcolor);
     color: white;
 }
-div[type="tile"],div[type="visited"]{
+div[type="tile"], div[type="visited"]{
     cursor: pointer;
     border: 1px solid black;
     background: white;
@@ -36,4 +36,7 @@ div[type="tile"],div[type="visited"]{
 div[type="wall"]{
     cursor: pointer;
     background: black;
+}
+div[type="test"]{
+    background: red;
 }

@@ -1,6 +1,6 @@
 const grid = document.getElementById("grid");
 const cellSize = 20;
-const width = 36, height = 15;
+const width = 36, height = 16;
 
 let mouse = {
     x: -1,
@@ -13,7 +13,7 @@ function InitializeGrid(){
             let y_ = a, x_ = b;
             let tile = $("<div type=tile></div>").attr('id', y_+'a'+x_);
             tile.width(cellSize); tile.height(cellSize);
-            tile.on("mouseover", ()=>{ 
+            tile.on("mouseup mouseover", ()=>{ 
                 if(mouse_down && current_draw_mode == "scattered") 
                     tile.attr('type','wall')
                 mouse.x = x_;
