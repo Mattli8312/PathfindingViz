@@ -10,7 +10,6 @@
 <body>
     <div id="nav">
         <div id="title">PathfindingVis</div>
-        <button type="button_a" onclick="SolveMaze_Dijkstra()">Solve</button>
         <button type="button_a" onclick="current_draw_mode = 'square'">Rect</button>
         <button type="button_a" onclick="current_draw_mode = 'line'">Line</button>
         <button type="button_a" onclick="current_draw_mode = 'circle'">Circle</button>
@@ -24,6 +23,7 @@
         <button type="button_a" onclick="GenerateMaze_Eller()">Eller</button>
         <button type="button_a" onclick="SolveMaze_Traversal('DFS')">Solve</button>
         <button type="button_a" onclick="SolveMaze_Traversal('BFS')">Solve</button>
+        <button type="button_a" onclick="SolveMaze_Dijkstra()">Solve</button>
     </div>
     <div id="grid"></div>
     <script src="./Components/Utils.js"></script>

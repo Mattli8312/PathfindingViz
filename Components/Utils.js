@@ -75,7 +75,7 @@ async function Backtrack(cx,cy){
     curr_node.attr('type','solved');
 }
 
-/**Auxillary Data structure used for Dijkstra, Best first search, and A* Pathfinding */
+/**Auxillary Data structure used for Best first search and A* Pathfinding */
 class PriorityQueue{
     constructor(heap = true){
         this.PQ = [];

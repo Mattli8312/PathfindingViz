@@ -60,7 +60,7 @@ async function SolveMaze_Dijkstra(xi=1,yi=1,xf=2*width-1,yf=2*height-1){
     let cx, cy;
     pq.push({x:xi,y:yi,val:0,prev:"start"});
     $('#'+yi+'a'+xi)
-    while(pq.length){
+    while(!pq.empty()){
         let curr = pq.pop();
         let curr_div = $('#'+curr.y+'a'+curr.x);
         let curr_weight = curr.prev != "start" ? curr.val + parseInt($('#' + curr.prev).attr('weight')) : 0;
@@ -69,7 +69,7 @@ async function SolveMaze_Dijkstra(xi=1,yi=1,xf=2*width-1,yf=2*height-1){
         cx = curr.x, cy = curr.y;
         if(cx == xf && cy == yf) break;
         for(let i = 0; i < 4; i++){
-            let next_tile = $('#'+curr.y+dy[i]/2 + 'a' + curr.x+dx[i]/2)
+            let next_tile = $('#'+(curr.y+dy[i]/2) + 'a' + (curr.x+dx[i]/2));
             if(validDivIndx(curr.y+dy[i]/2, curr.x+dx[i]/2) && CanPass(curr.x,curr.y,curr.x+dx[i]/2,curr.y+dy[i]/2)){
                 if(next_tile.attr('type') != 'passed' || parseInt(next_tile.attr('weight') > curr_weight + 1)){
                     pq.push(
@@ -79,7 +79,7 @@ async function SolveMaze_Dijkstra(xi=1,yi=1,xf=2*width-1,yf=2*height-1){
                         val:curr_weight+1,
                         prev:curr_div.attr('id')
                     })
-                    curr_div.attr('type','passed');
+                    next_tile.attr('type','passed');
                 }
             }
         }

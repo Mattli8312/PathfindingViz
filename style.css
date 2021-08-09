@@ -43,6 +43,3 @@ div[type="passed"]{
 div[type="solved"]{
     background: purple;
 }
-.animated{
-    transition: all 0.8s ease;
-}
