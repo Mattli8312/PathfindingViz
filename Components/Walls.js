@@ -168,7 +168,7 @@ function RenderPixels(){
 function ClearBoard(){
     /**Simple JQuery Call */
     $('[type=wall]').attr('type','tile');
-
+    $('[type=visited]').attr('type','tile');
 }
 
 window.addEventListener("mousedown", ()=>{
@@ -205,7 +205,6 @@ window.addEventListener("mousemove", ()=> {
 })
 
 window.addEventListener("mouseup", ()=>{
-    console.log("released");
     current_draw_mode = "scattered";
     prev_pixels = [];
     mouse_down = false;
