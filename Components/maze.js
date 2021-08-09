@@ -153,6 +153,8 @@ async function GenerateMaze_Eller(){
     for(let i = 1; i < 2*height+1; i+=2){
         //Rule: every node must connect to another node, unless it cannot
         //Excavation: excavate the left wall if binding
+        //Edge case: when we are at the bottom row
+        let edge_case = i == 2 * height - 1;
         for(let j = 1; j < 2 * width + 1; j+= 2){
             let curr_node = $('#'+i+'a'+j);
             let prev_node = $('#'+i+'a'+(j-2));
@@ -162,15 +164,20 @@ async function GenerateMaze_Eller(){
                 curr_node.attr('set',curr_node.attr('id'));
             }
             let clear = prev_node.attr('set') != curr_node.attr('set');
-            if(j != 1 && Math.floor(Math.random()*3) && clear){
+            if(j != 1 && Math.floor(Math.random()*3) && clear || edge_case){
                 Excavate(2, j, i);
                 //Combine the sets
                 $('[set=' + curr_node.attr('set') + ']').attr('set',prev_node.attr('set'));
-            }
+            }            
+            await new Promise(resolve => setTimeout(resolve, 10));
         }
+        //If we meet the edge case, break out of the loop
+        if(edge_case) return;
+
         //Excavation: for each set, excavate a single verticle wall and render the new vertical components
         let curr_set = $('#'+i+'a'+1).attr('set');
         let options = [];
+
         for(let j = 1; j < 2 * width + 3; j+= 2){ //+3 is an edge case
             let curr_node = $('#'+i+'a'+j);
             if(curr_node.attr('set') == curr_set){
@@ -187,6 +194,7 @@ async function GenerateMaze_Eller(){
                 curr_set = curr_node.attr('set');
                 options = [[i,j]];
             }
+            await new Promise(resolve => setTimeout(resolve, 10));
         }
     }
 }
