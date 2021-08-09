@@ -37,6 +37,12 @@ div[type="wall"]{
     cursor: pointer;
     background: black;
 }
-div[type="test"]{
-    background: red;
+div[type="passed"]{
+    background: teal;
+}
+div[type="solved"]{
+    background: purple;
+}
+.animated{
+    transition: all 0.8s ease;
 }

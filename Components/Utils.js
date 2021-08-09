@@ -54,3 +54,12 @@ function Excavate(val,cx,cy){
         default: break;
     }
 }
+
+/**Used for seeing if we can travel a certain direction */
+function CanPass(xi,yi,xf,yf){
+    if($('#'+yf+'a'+xf).attr('type') == 'passed') 
+        return false;
+    else if($('#'+yf+'a'+xf).attr('type') == 'wall')
+        return false;
+    return true;
+}
