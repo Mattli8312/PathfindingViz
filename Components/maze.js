@@ -149,6 +149,7 @@ async function GenerateMaze_HAK(){
 
 /** Maze Generation using Eller's Algorithm */
 async function GenerateMaze_Eller(){
+    ClearBoard();
     //Analyze by row
     for(let i = 1; i < 2*height+1; i+=2){
         //Rule: every node must connect to another node, unless it cannot
@@ -164,7 +165,7 @@ async function GenerateMaze_Eller(){
                 curr_node.attr('set',curr_node.attr('id'));
             }
             let clear = prev_node.attr('set') != curr_node.attr('set');
-            if(j != 1 && Math.floor(Math.random()*3) && clear || edge_case){
+            if(j != 1 && (Math.floor(Math.random()*3) && clear || edge_case)){
                 Excavate(2, j, i);
                 //Combine the sets
                 $('[set=' + curr_node.attr('set') + ']').attr('set',prev_node.attr('set'));
