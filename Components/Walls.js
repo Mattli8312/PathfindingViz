@@ -167,8 +167,7 @@ function RenderPixels(){
 
 function ClearBoard(){
     /**Simple JQuery Call */
-    $('[type=wall]').attr('type','tile');
-    $('[type=visited]').attr('type','tile');
+    $('div[type]').attr('type','tile');
 }
 
 window.addEventListener("mousedown", ()=>{

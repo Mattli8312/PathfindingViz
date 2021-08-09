@@ -110,6 +110,7 @@ async function GenerateMaze_Kruskals(){
         await new Promise(resolve => setTimeout(resolve, 10));
     }
     $('[set]').removeAttr('set');
+    $('[type=visited]').attr('type','tile');
 }
 
 /** Maze Generation using the Hunt and Kill Method (enhanced DFS) */
@@ -117,8 +118,10 @@ async function GenerateMaze_HAK(){
     ClearBoard();
     while(true){
         let start = HAK_helper();
-
-        if(start[0] == -1) return;
+        if(start[0] == -1){
+            $('[type=visited]').attr('type','tile');
+            return;
+        }
         else if(start[1] == 1) start.push(1); 
         else start.push(2);
         
@@ -144,7 +147,6 @@ async function GenerateMaze_HAK(){
             await new Promise(resolve => setTimeout(resolve, 10));
         }
     }
-    
 }
 
 /** Maze Generation using Eller's Algorithm */
@@ -173,7 +175,7 @@ async function GenerateMaze_Eller(){
             await new Promise(resolve => setTimeout(resolve, 10));
         }
         //If we meet the edge case, break out of the loop
-        if(edge_case) return;
+        if(edge_case) break;
 
         //Excavation: for each set, excavate a single verticle wall and render the new vertical components
         let curr_set = $('#'+i+'a'+1).attr('set');
@@ -198,6 +200,9 @@ async function GenerateMaze_Eller(){
             await new Promise(resolve => setTimeout(resolve, 10));
         }
     }
+    $('[set]').removeAttr('set');
+    $('[type=visited]').attr('type','tile');
+    console.log($('[type=visited]').length);
 }
 
 //await new Promise(resolve => setTimeout(resolve, 50));

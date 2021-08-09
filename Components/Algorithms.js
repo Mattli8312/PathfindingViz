@@ -4,39 +4,78 @@
  */
 
 
-/**
- * Solves maze using DFS
- */
-async function SolveMaze_DFS(xi=1,yi=1,xf=2*width-1,yf=2*height-1){
+/**Solves Maze or any graph traversal using Depth First Search or Breadth First Search */
+async function SolveMaze_Traversal(traversal, xi=1,yi=1,xf=2*width-1,yf=2*height-1){
+
     let stack = [[yi,xi,"start"]];
+    
     let cx, cy;
     //First modify css of the cells
     $('[type=tile]').addClass('animated');
+    
     while(stack.length > 0){
-        let curr = stack[stack.length-1];
+
+        let curr = stack.splice((traversal == "DFS" ? stack.length-1 : 0),1)[0];
+
         let curr_div = $('#'+curr[0]+'a'+curr[1]);
+
         cx = curr[1]; cy = curr[0];
+
         curr_div.attr('type','passed');
+
         curr_div.attr('prev',curr[2]);
-        stack.pop();
+
         if(curr[0] == yf && curr[1] == xf) break;
+
         for(let i = 0; i < 4; i++){
+
             if(validDivIndx(curr[0]+dy[i]/2,curr[1]+dx[i]/2) && CanPass(curr[1],curr[0],curr[1]+dx[i]/2,curr[0]+dy[i]/2)){
+
                 stack.push([curr[0]+dy[i]/2,curr[1]+dx[i]/2,curr_div.attr('id')]);
+
             }
         }
         await new Promise(resolve => setTimeout(resolve, 10));
     }
     //Back track;
     if(cx == xf && cy == yf){
-        let curr_node = $('#'+cy+'a'+cx)
-        while(curr_node.attr('prev') != 'start'){
-            curr_node.attr('type','solved');
-            curr_node = $('#'+curr_node.attr('prev'));
-            await new Promise(resolve => setTimeout(resolve, 10));
-        }
-        curr_node.attr('type','solved');
+        await Backtrack(cx,cy);
     }
     //Then demodify the cells;
     $('.animated').removeClass('animated');
+}
+
+/**Solves Maze or any graph structure using Dijkstra's pathfinding algorithm with a min heap */
+async function SolveMaze_Dijkstra(xi=1,yi=1,xf=2*width-1,yf=2*height-1){
+    let pq = new PriorityQueue();
+    let cx, cy;
+    pq.push({x:xi,y:yi,val:0,prev:"start"});
+    while(!pq.empty()){
+        let curr = pq.pop();
+        let curr_div = $('#'+curr.y+'a'+curr.x);
+        let curr_weight = curr.prev != "start" ? curr.val + parseInt($('#' + curr.prev).attr('weight')) : 0;
+        curr_div.attr('type','passed');
+        curr_div.attr('prev',curr.prev);
+        curr_div.attr('weight', curr_weight);
+        cx = curr.x, cy = curr.y;
+        if(cx == xf && cy == yf) break;
+        for(let i = 0; i < 4; i++){
+            let next_tile = $('#'+curr.y+dy[i]/2 + 'a' + curr.x+dx[i]/2)
+            if(validDivIndx(curr.y+dy[i]/2, curr.x+dx[i]/2) && CanPass(curr.x,curr.y,curr.x+dx[i]/2,curr.y+dy[i]/2)){
+                if(next_tile.attr('type') != 'passed' || parseInt(next_tile.attr('weight') > curr_weight + 1)){
+                    pq.push(
+                    {   
+                        x:curr.x+dx[i]/2, 
+                        y:curr.y+dy[i]/2, 
+                        val:curr_weight+1,
+                        prev:curr_div.attr('id')
+                    })
+                }
+            }
+        }
+        await new Promise(resolve => setTimeout(resolve, 10));
+    }
+    if(cx == xf && cy == xy){
+        await Backtrack(cx,cy);
+    }
 }

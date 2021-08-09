@@ -63,3 +63,40 @@ function CanPass(xi,yi,xf,yf){
         return false;
     return true;
 }
+
+/**Used for Backtracking */
+async function Backtrack(cx,cy){
+    let curr_node = $('#'+cy+'a'+cx)
+    while(curr_node.attr('prev') != 'start'){
+        curr_node.attr('type','solved');
+        curr_node = $('#'+curr_node.attr('prev'));
+        await new Promise(resolve => setTimeout(resolve, 10));
+    }
+    curr_node.attr('type','solved');
+}
+
+/**Auxillary Data structure used for Dijkstra, Best first search, and A* Pathfinding */
+class PriorityQueue{
+    constructor(heap = true){
+        this.PQ = [];
+        this.minheap = heap;
+    }
+    push(coords){
+        this.PQ.push(coords);
+        if(this.minheap) this.PQ.sort(function(a,b){return a.val - b.val});
+        else this.PQ.sort(function(a,b){return b.val - a.val});
+    }
+    pop(){
+        return this.PQ.length ? this.PQ.splice(0,1)[0] : {val:-1};
+    }
+    empty(){
+        return !this.PQ.length;
+    }
+}
+
+const test = new PriorityQueue(false);
+test.push({val:20});
+console.log(test.PQ);
+
+//For testing purposes;
+module.exports = PriorityQueue;
