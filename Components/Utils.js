@@ -1,5 +1,5 @@
 /**
- * This file contains all the utility functions used by maze.js
+ * This file contains all the utility functions used by maze.js and Algorithms.js
  */
 const dx = [-2,0,2,0];
 const dy = [0,2,0,-2];
