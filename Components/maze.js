@@ -107,7 +107,7 @@ async function GenerateMaze_Kruskals(){
             //Excavate the barrier between the two
             $('#'+((curr[0][0] + curr[1][0])/2) + 'a' + (curr[0][1] + curr[1][1])/2).attr('type','visited');
         }
-        //await new Promise(resolve => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 10));
     }
     $('[type=visited]').attr('type','tile');
     $('[set]').removeAttr('set');

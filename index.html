@@ -4,28 +4,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>PathfindingViz</title>
 </head>
 <body>
     <div id="nav">
         <div id="title">PathfindingVis</div>
-        <button type="button_a" onclick="current_draw_mode = 'square'">Rec</button>
-        <button type="button_a" onclick="current_draw_mode = 'line'">Ln</button>
-        <button type="button_a" onclick="current_draw_mode = 'circle'">Crcl</button>
-        <button type="button_a" onclick="current_draw_mode = 'erase'">Er</button>
-        <button type="button_a" onclick="ClearBoard()">Clr</button>
-        <button type="button_a" onclick="RandomWalls()">Rand</button>
-        <button type="button_a" onclick="GenerateMaze_DFS()">BT_DFS</button>
-        <button type="button_a" onclick="GenerateMaze_Prims()">Prims</button>
-        <button type="button_a" onclick="GenerateMaze_Kruskals()">Krusk</button>
-        <button type="button_a" onclick="GenerateMaze_HAK()">HAK</button>
-        <button type="button_a" onclick="GenerateMaze_Eller()">Ellr</button>
-        <button type="button_a" onclick="SolveMaze_Traversal('DFS')">DFS</button>
-        <button type="button_a" onclick="SolveMaze_Traversal('BFS')">BFS</button>
-        <button type="button_a" onclick="SolveMaze_Dijkstra()">Dijk</button>
-        <button type="button_a" onclick="SolveMaze_AStar()">A*</button>
-        <button type="button_a" onclick="SolveMaze_GBFS()">GBFS</button>
+        <div id="controlpanel">
+            <ul>
+                <button type="button_a" onclick="ButtonHandler('dropdown1')">Draw</button>
+                <div id="dropdown1" enabled="false">
+                    <button class="far fa-square" type="button_a" onclick="current_draw_mode = 'square' "></button>
+                    <button class="fas fa-long-arrow-alt-right" type="button_a" onclick="current_draw_mode = 'line'"></button>
+                    <button class="far fa-circle" type="button_a" onclick="current_draw_mode = 'circle'"></button>
+                    <button class="fas fa-eraser" type="button_a" onclick="current_draw_mode = 'erase'"></button>
+                    <button class="fas fa-paint-roller" type="button_a" onclick="ClearBoard()"></button>
+                </div>
+            </ul>
+            <ul>
+                <button type="button_a" onclick="ButtonHandler('dropdown2')">Maze</button>
+                <div id="dropdown2" enabled="false">
+                    <button type="button_a" onclick="GenerateMaze_DFS()">BT</button>
+                    <button type="button_a" onclick="GenerateMaze_Prims()">Prims</button>
+                    <button type="button_a" onclick="GenerateMaze_Kruskals()">Kruskals</button>
+                    <button type="button_a" onclick="GenerateMaze_HAK()">HAK</button>
+                    <button type="button_a" onclick="GenerateMaze_Eller()">Ellr</button>
+                    <button type="button_a" onclick="RandomWalls()">Rand</button>
+                </div>
+            </ul>
+            <ul>
+                <button type="button_a" onclick="ButtonHandler('dropdown3')">Path</button>
+                <div id="dropdown3" enabled="false">
+                    <button type="button_a" onclick="SolveMaze_Traversal('DFS')">DFS</button>
+                    <button type="button_a" onclick="SolveMaze_Traversal('BFS')">BFS</button>
+                    <button type="button_a" onclick="SolveMaze_Dijkstra()">Dijk</button>
+                    <button type="button_a" onclick="SolveMaze_AStar()">A*</button>
+                    <button type="button_a" onclick="SolveMaze_GBFS()">GBFS</button>
+                </div>
+            </ul>
+        </div>
     </div>
     <div id="grid"></div>
     <script src="./Components/Utils.js"></script>

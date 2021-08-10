@@ -27,6 +27,15 @@ function InitializeGrid(){
     grid.style.height = height*2*cellSize + cellSize;
 }
 
+function ButtonHandler(event){
+    switch(event){
+        default: //Default case is when we click a dropdown menu and we have to disable all the other drop downs
+            $('[enabled=true]').attr('enabled','false');
+            $('#'+event).attr('enabled','true');
+            break;
+    }
+}
+
 function main(){
     InitializeGrid();
 }

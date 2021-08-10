@@ -119,19 +119,18 @@ async function SolveMaze_AStar(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
     //First modify css of the cells
     $('[type=tile]').addClass('animated');
 
-    $('#'+yi+'a'+xi).attr('type','passed');
-
     while(!pq.empty()){
         let curr = pq.pop();
         let curr_div = $('#'+curr.y+'a'+curr.x);
         curr_div.attr('prev',curr.prev);
         curr_div.attr('weight', curr.val);
+        curr_div.attr('type','passed');
         cx = curr.x, cy = curr.y;
         if(cx == xf && cy == yf) break;
         for(let i = 0; i < 4; i++){
             let next_tile = $('#'+(curr.y+dy[i]/2) + 'a' + (curr.x+dx[i]/2));
             if(validDivIndx(curr.y+dy[i]/2, curr.x+dx[i]/2) && CanPass(curr.x,curr.y,curr.x+dx[i]/2,curr.y+dy[i]/2)){
-                if(next_tile.attr('type') != 'passed'){
+                if(next_tile.attr('type') == 'tile'){
                     pq.push(
                     {   
                         x:curr.x+dx[i]/2, 
@@ -140,7 +139,7 @@ async function SolveMaze_AStar(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
                         val: curr.g_cost + 1 + RoundedDistance(xf,yf,curr.x+dx[i]/2,curr.y+dy[i]/2),
                         prev:curr_div.attr('id')
                     })
-                    next_tile.attr('type','passed');
+                    next_tile.attr('type','stacked');
                 }
             }
         }
