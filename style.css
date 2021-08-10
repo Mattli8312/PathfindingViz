@@ -2,7 +2,12 @@
     margin: 0; padding: 0;
     font-family:Georgia, 'Times New Roman', Times, serif;
     box-sizing: border-box;
-    --backgroundcolor: black;
+    --backgroundcolor: linear-gradient(to right, #5C258D, #4389A2);
+    --backgroundcolor2: linear-gradient(to right, #1F1C2C, #928DAB);
+    --background3: linear-gradient(to right, #1488CC, #2B32B2);
+}
+body{
+    background: var(--background3);
 }
 #grid{
     margin: auto;
@@ -14,7 +19,6 @@
     font-size: 2.5em;
     padding: 0.5em;
     color: white;
-    background: var(--backgroundcolor);
 }
 button[type="button_a"]{
     padding: 1em;
@@ -25,21 +29,31 @@ button[type="button_a"]{
     transition: 0.5s ease;
 }
 button[type="button_a"]:hover {
-    background: var(--backgroundcolor);
+    background: transparent;
     color: white;
+}
+div[type]{
+    border: 1px solid lightblue;
 }
 div[type="tile"], div[type="visited"]{
     cursor: pointer;
-    border: 1px solid black;
     background: white;
 }
 div[type="wall"]{
     cursor: pointer;
     background: black;
+    border: none;
 }
 div[type="passed"]{
     background: teal;
 }
+div[type="stacked"]{
+    background: blue;
+}
 div[type="solved"]{
     background: purple;
+    border: none;
+}
+.animated{
+    transition: 0.5s ease;
 }

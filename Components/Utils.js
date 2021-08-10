@@ -67,12 +67,33 @@ function CanPass(xi,yi,xf,yf){
 /**Used for Backtracking */
 async function Backtrack(cx,cy){
     let curr_node = $('#'+cy+'a'+cx)
+    let path = [];
     while(curr_node.attr('prev') != 'start'){
-        curr_node.attr('type','solved');
+        path.push(curr_node);
         curr_node = $('#'+curr_node.attr('prev'));
+    }
+    path.push(curr_node);
+    path.reverse();
+    for(const p of path){
+        p.attr('type','solved');
         await new Promise(resolve => setTimeout(resolve, 10));
     }
-    curr_node.attr('type','solved');
+}
+
+/**Used by all pathfinding algorithms to reset the previous path (if any) */
+function ResetPath(){
+    $('[type=solved]').attr('type','tile');
+    $('[type=passed]').attr('type','tile');
+}
+
+/**Used for AStar heuristic */
+function RoundedDistance(xi,yi,xf,yf){
+    return Math.round(Math.sqrt(Math.pow(xi-xf,2)+Math.pow(yi-yf,2)));
+}
+
+/**Used for Greedy Best First Search */
+function EuclideanDistance(xi,yi,xf,yf){
+    return Math.sqrt(Math.pow(xi-xf,2)+Math.pow(yi-yf,2)).toFixed(1);
 }
 
 /**Auxillary Data structure used for Best first search and A* Pathfinding */

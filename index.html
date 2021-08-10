@@ -10,20 +10,22 @@
 <body>
     <div id="nav">
         <div id="title">PathfindingVis</div>
-        <button type="button_a" onclick="current_draw_mode = 'square'">Rect</button>
-        <button type="button_a" onclick="current_draw_mode = 'line'">Line</button>
-        <button type="button_a" onclick="current_draw_mode = 'circle'">Circle</button>
-        <button type="button_a" onclick="current_draw_mode = 'erase'">Erase</button>
-        <button type="button_a" onclick="ClearBoard()">Clear</button>
-        <button type="button_a" onclick="RandomWalls()">Random</button>
-        <button type="button_a" onclick="GenerateMaze_DFS()">DFS</button>
+        <button type="button_a" onclick="current_draw_mode = 'square'">Rec</button>
+        <button type="button_a" onclick="current_draw_mode = 'line'">Ln</button>
+        <button type="button_a" onclick="current_draw_mode = 'circle'">Crcl</button>
+        <button type="button_a" onclick="current_draw_mode = 'erase'">Er</button>
+        <button type="button_a" onclick="ClearBoard()">Clr</button>
+        <button type="button_a" onclick="RandomWalls()">Rand</button>
+        <button type="button_a" onclick="GenerateMaze_DFS()">BT_DFS</button>
         <button type="button_a" onclick="GenerateMaze_Prims()">Prims</button>
-        <button type="button_a" onclick="GenerateMaze_Kruskals()">Kruskal</button>
+        <button type="button_a" onclick="GenerateMaze_Kruskals()">Krusk</button>
         <button type="button_a" onclick="GenerateMaze_HAK()">HAK</button>
-        <button type="button_a" onclick="GenerateMaze_Eller()">Eller</button>
-        <button type="button_a" onclick="SolveMaze_Traversal('DFS')">Solve</button>
-        <button type="button_a" onclick="SolveMaze_Traversal('BFS')">Solve</button>
-        <button type="button_a" onclick="SolveMaze_Dijkstra()">Solve</button>
+        <button type="button_a" onclick="GenerateMaze_Eller()">Ellr</button>
+        <button type="button_a" onclick="SolveMaze_Traversal('DFS')">DFS</button>
+        <button type="button_a" onclick="SolveMaze_Traversal('BFS')">BFS</button>
+        <button type="button_a" onclick="SolveMaze_Dijkstra()">Dijk</button>
+        <button type="button_a" onclick="SolveMaze_AStar()">A*</button>
+        <button type="button_a" onclick="SolveMaze_GBFS()">GBFS</button>
     </div>
     <div id="grid"></div>
     <script src="./Components/Utils.js"></script>

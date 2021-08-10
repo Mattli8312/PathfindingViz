@@ -2,9 +2,10 @@
  * This file will contain all the graph traversal and pathfinding
  * algorithms used for visualization
  */
-
 /**Solves Maze or any graph traversal using Depth First Search or Breadth First Search */
 async function SolveMaze_Traversal(traversal, xi=1,yi=1,xf=2*width-1,yf=2*height-1){
+
+    ResetPath();
 
     let stack = [[yi,xi,"start"]];
     
@@ -26,7 +27,7 @@ async function SolveMaze_Traversal(traversal, xi=1,yi=1,xf=2*width-1,yf=2*height
 
         curr_div.attr('prev',curr[2]);
 
-        if(dfs) $('#'+(curr[0])+'a'+(curr[1])).attr('type','passed');
+        $('#'+(curr[0])+'a'+(curr[1])).attr('type','passed');
 
         if(curr[0] == yf && curr[1] == xf) break;
 
@@ -34,11 +35,13 @@ async function SolveMaze_Traversal(traversal, xi=1,yi=1,xf=2*width-1,yf=2*height
 
             if(validDivIndx(curr[0]+dy[i]/2,curr[1]+dx[i]/2) && CanPass(curr[1],curr[0],curr[1]+dx[i]/2,curr[0]+dy[i]/2)){
 
-                if($('#'+(curr[0]+dy[i]/2)+'a'+(curr[1]+dx[i]/2)).attr('type') != 'passed'){
+                let next_div = $('#'+(curr[0]+dy[i]/2)+'a'+(curr[1]+dx[i]/2));
+
+                if(next_div.attr('type') == 'tile'){
 
                     stack.push([curr[0]+dy[i]/2,curr[1]+dx[i]/2,curr_div.attr('id')]);
 
-                    if(!dfs) $('#'+(curr[0]+dy[i]/2)+'a'+(curr[1]+dx[i]/2)).attr('type','passed');
+                    if(!dfs) $('#'+(curr[0]+dy[i]/2)+'a'+(curr[1]+dx[i]/2)).attr('type','stacked');
 
                 }
 
@@ -46,6 +49,7 @@ async function SolveMaze_Traversal(traversal, xi=1,yi=1,xf=2*width-1,yf=2*height
         }
         await new Promise(resolve => setTimeout(resolve, 10));
     }
+    $('[type=stacked]').attr('type','passed');
     //Back track;
     if(cx == xf && cy == yf){
         await Backtrack(cx,cy);
@@ -55,11 +59,18 @@ async function SolveMaze_Traversal(traversal, xi=1,yi=1,xf=2*width-1,yf=2*height
 }
 
 /**Solves Maze or any graph structure using Dijkstra's pathfinding algorithm with a min heap */
-async function SolveMaze_Dijkstra(xi=1,yi=1,xf=2*width-1,yf=2*height-1){
+async function SolveMaze_Dijkstra(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
+    ResetPath();
     let pq = new PriorityQueue();
     let cx, cy;
     pq.push({x:xi,y:yi,val:0,prev:"start"});
     $('#'+yi+'a'+xi)
+
+    //First modify css of the cells
+    $('[type=tile]').addClass('animated');
+
+    $('#'+yi+'a'+xi).attr('type','passed');
+
     while(!pq.empty()){
         let curr = pq.pop();
         let curr_div = $('#'+curr.y+'a'+curr.x);
@@ -88,4 +99,103 @@ async function SolveMaze_Dijkstra(xi=1,yi=1,xf=2*width-1,yf=2*height-1){
     if(cx == xf && cy == yf){
         await Backtrack(cx,cy);
     }
+    //Then demodify the cells;
+    $('.animated').removeClass('animated');
+}
+
+/** A* Pathfinding Algorithm */
+async function SolveMaze_AStar(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
+    ResetPath();
+    let pq = new PriorityQueue();
+    let cx, cy;
+    pq.push({
+        x:xi, 
+        y:yi,
+        g_cost:0, 
+        val:(RoundedDistance(xi,yi,xf,yf)) ,
+        prev: "start"
+    });
+
+    //First modify css of the cells
+    $('[type=tile]').addClass('animated');
+
+    $('#'+yi+'a'+xi).attr('type','passed');
+
+    while(!pq.empty()){
+        let curr = pq.pop();
+        let curr_div = $('#'+curr.y+'a'+curr.x);
+        curr_div.attr('prev',curr.prev);
+        curr_div.attr('weight', curr.val);
+        cx = curr.x, cy = curr.y;
+        if(cx == xf && cy == yf) break;
+        for(let i = 0; i < 4; i++){
+            let next_tile = $('#'+(curr.y+dy[i]/2) + 'a' + (curr.x+dx[i]/2));
+            if(validDivIndx(curr.y+dy[i]/2, curr.x+dx[i]/2) && CanPass(curr.x,curr.y,curr.x+dx[i]/2,curr.y+dy[i]/2)){
+                if(next_tile.attr('type') != 'passed'){
+                    pq.push(
+                    {   
+                        x:curr.x+dx[i]/2, 
+                        y:curr.y+dy[i]/2, 
+                        g_cost: curr.g_cost + 1,
+                        val: curr.g_cost + 1 + RoundedDistance(xf,yf,curr.x+dx[i]/2,curr.y+dy[i]/2),
+                        prev:curr_div.attr('id')
+                    })
+                    next_tile.attr('type','passed');
+                }
+            }
+        }
+        await new Promise(resolve => setTimeout(resolve, 10));
+    }
+    if(cx == xf && cy == yf){
+        await Backtrack(cx,cy);
+    }
+    //Then demodify the cells;
+    $('.animated').removeClass('animated');
+}
+
+async function SolveMaze_GBFS(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
+    ResetPath();
+    let pq = new PriorityQueue();
+    let cx, cy;
+    pq.push({
+        x:xi, 
+        y:yi,
+        val:(EuclideanDistance(xi,yi,xf,yf)) ,
+        prev: "start"
+    });
+
+    //First modify css of the cells
+    $('[type=tile]').addClass('animated');
+
+    $('#'+yi+'a'+xi).attr('type','passed');
+
+    while(!pq.empty()){
+        let curr = pq.pop();
+        let curr_div = $('#'+curr.y+'a'+curr.x);
+        curr_div.attr('prev',curr.prev);
+        curr_div.attr('weight', curr.val);
+        cx = curr.x, cy = curr.y;
+        if(cx == xf && cy == yf) break;
+        for(let i = 0; i < 4; i++){
+            let next_tile = $('#'+(curr.y+dy[i]/2) + 'a' + (curr.x+dx[i]/2));
+            if(validDivIndx(curr.y+dy[i]/2, curr.x+dx[i]/2) && CanPass(curr.x,curr.y,curr.x+dx[i]/2,curr.y+dy[i]/2)){
+                if(next_tile.attr('type') != 'passed'){
+                    pq.push(
+                    {   
+                        x:curr.x+dx[i]/2, 
+                        y:curr.y+dy[i]/2, 
+                        val: EuclideanDistance(xf,yf,curr.x+dx[i]/2,curr.y+dy[i]/2),
+                        prev:curr_div.attr('id')
+                    })
+                    next_tile.attr('type','passed');
+                }
+            }
+        }
+        await new Promise(resolve => setTimeout(resolve, 10));
+    }
+    if(cx == xf && cy == yf){
+        await Backtrack(cx,cy);
+    }
+    //Then demodify the cells;
+    $('.animated').removeClass('animated');
 }

@@ -6,7 +6,7 @@
 /** Maze Generation using Depth-First Search (iterative approach) */
 async function GenerateMaze_DFS(){
     //InitializeAllWalls();
-    ClearBoard();
+    await ClearBoard();
     let x = Math.floor(Math.random() * width)*2+1;
     let y = Math.floor(Math.random() * height)*2+1;
     let stack = [];
@@ -42,7 +42,7 @@ async function GenerateMaze_DFS(){
 
 /** Maze Generation using Prims minimum spanning tree algorithm */
 async function GenerateMaze_Prims(){
-    ClearBoard();
+    await ClearBoard();
     let x = Math.floor(Math.random() * width)*2+1;
     let y = Math.floor(Math.random() * height)*2+1;
     let set = [[y,x]];
@@ -71,14 +71,14 @@ async function GenerateMaze_Prims(){
                 set.push([curr[0]+dy[i],curr[1]+dx[i],i]);
             }
         }
-        //await new Promise(resolve => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 10));
     }
     $('[type=visited]').attr('type','tile');
 }
 
 /** Maze Generation using Kruskals randomized tree algorithm */
 async function GenerateMaze_Kruskals(){
-    ClearBoard();
+    await ClearBoard();
     let edges = GetEdges();
     while(edges.length > 0){
         let curr = edges.splice(Math.floor(Math.random()*edges.length), 1)[0];
@@ -107,15 +107,15 @@ async function GenerateMaze_Kruskals(){
             //Excavate the barrier between the two
             $('#'+((curr[0][0] + curr[1][0])/2) + 'a' + (curr[0][1] + curr[1][1])/2).attr('type','visited');
         }
-        await new Promise(resolve => setTimeout(resolve, 10));
+        //await new Promise(resolve => setTimeout(resolve, 10));
     }
-    $('[set]').removeAttr('set');
     $('[type=visited]').attr('type','tile');
+    $('[set]').removeAttr('set');
 }
 
 /** Maze Generation using the Hunt and Kill Method (enhanced DFS) */
 async function GenerateMaze_HAK(){
-    ClearBoard();
+    await ClearBoard();
     while(true){
         let start = HAK_helper();
         if(start[0] == -1){
@@ -151,7 +151,7 @@ async function GenerateMaze_HAK(){
 
 /** Maze Generation using Eller's Algorithm */
 async function GenerateMaze_Eller(){
-    ClearBoard();
+    await ClearBoard();
     //Analyze by row
     for(let i = 1; i < 2*height+1; i+=2){
         //Rule: every node must connect to another node, unless it cannot
