@@ -1,4 +1,5 @@
 const grid = document.getElementById("grid");
+const poop = ;
 const cellSize = 20;
 const width = 36, height = 16;
 const speed = document.getElementById("speed");
