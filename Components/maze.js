@@ -34,7 +34,7 @@ async function GenerateMaze_DFS(){
             let next = options[indx];
             
             stack.push(next); 
-            await new Promise(resolve => setTimeout(resolve, 50));
+            await new Promise(resolve => setTimeout(resolve, 60/FPS));
         }
     }
     $('[type=visited]').attr('type','tile');
@@ -71,7 +71,7 @@ async function GenerateMaze_Prims(){
                 set.push([curr[0]+dy[i],curr[1]+dx[i],i]);
             }
         }
-        await new Promise(resolve => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 60/FPS));
     }
     $('[type=visited]').attr('type','tile');
 }
@@ -107,7 +107,7 @@ async function GenerateMaze_Kruskals(){
             //Excavate the barrier between the two
             $('#'+((curr[0][0] + curr[1][0])/2) + 'a' + (curr[0][1] + curr[1][1])/2).attr('type','visited');
         }
-        await new Promise(resolve => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 60/FPS));
     }
     $('[type=visited]').attr('type','tile');
     $('[set]').removeAttr('set');
@@ -144,7 +144,7 @@ async function GenerateMaze_HAK(){
                 let indx = Math.floor(Math.random()*options.length);
                 stack.push(options[indx]);
             }
-            await new Promise(resolve => setTimeout(resolve, 10));
+            await new Promise(resolve => setTimeout(resolve, 60/FPS));
         }
     }
 }
@@ -172,7 +172,7 @@ async function GenerateMaze_Eller(){
                 //Combine the sets
                 $('[set=' + curr_node.attr('set') + ']').attr('set',prev_node.attr('set'));
             }            
-            await new Promise(resolve => setTimeout(resolve, 10));
+            await new Promise(resolve => setTimeout(resolve, 60/FPS));
         }
         //If we meet the edge case, break out of the loop
         if(edge_case) break;
@@ -197,7 +197,7 @@ async function GenerateMaze_Eller(){
                 curr_set = curr_node.attr('set');
                 options = [[i,j]];
             }
-            await new Promise(resolve => setTimeout(resolve, 10));
+            await new Promise(resolve => setTimeout(resolve, 60/FPS));
         }
     }
     $('[set]').removeAttr('set');

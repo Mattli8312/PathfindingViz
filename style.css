@@ -28,6 +28,20 @@ body{
 #controlpanel{
     display: flex;
 }
+#controlpanel input{
+    width: 5vw;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+}
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 20px;
+    background: purple;
+    cursor: pointer;
+  }
 ul button{
     display: block;
     position: relative;
@@ -37,22 +51,17 @@ ul div{
     display: flex;
     flex-direction: column;
     padding: 0.1em;
-    width: 10vw;
-    height: 50vh;
+    width: 20vw;
     position: absolute;
     justify-content: space-around;
     transition: 0.3s ease;
 }
 div[enabled="false"]{
-    right: -30vw;
-}
-div[enabled="true"]{
-    right: 0;
+    display: none;
 }
 [type="button_a"]{
     padding: 1.5em;
     margin: 1.5em;
-    border-radius: 7%;
     margin: 0 1em;
     border-style: none;
     cursor:pointer;

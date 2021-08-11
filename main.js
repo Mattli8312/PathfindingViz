@@ -1,7 +1,9 @@
 const grid = document.getElementById("grid");
 const cellSize = 20;
 const width = 36, height = 16;
+const speed = document.getElementById("speed");
 
+let FPS = 3;
 let mouse = {
     x: -1,
     y: -1
@@ -25,13 +27,39 @@ function InitializeGrid(){
     }
     grid.style.width = width*2*cellSize + cellSize;
     grid.style.height = height*2*cellSize + cellSize;
+    //Initialize Slider inputs
+    speed.addEventListener("input", function(){
+        this.setAttribute('value', this.value);
+        FPS = parseInt(this.value);
+        console.log(FPS)
+    })
 }
 
-function ButtonHandler(event){
+async function ButtonHandler(event, callbackFunction, parameter = ""){
     switch(event){
+        case 0:
+            $('[enabled=true]').attr('enabled',false);
+            ResetPath();
+            $('button').attr('disabled',true);
+            $('[type=tile]').addClass('animated');
+            if(parameter == "")
+                await callbackFunction();
+            else await callbackFunction(parameter);
+            $('button').attr('disabled',false);
+            $('.animated').removeClass('animated');
+            break;
+        case 1:
+            current_draw_mode = parameter;
+            $('[enabled=true]').attr('enabled',false);
+            break;
         default: //Default case is when we click a dropdown menu and we have to disable all the other drop downs
-            $('[enabled=true]').attr('enabled','false');
-            $('#'+event).attr('enabled','true');
+            if(event == $('[enabled=true]').attr('id')){
+                $('[enabled=true]').attr('enabled',false);
+            }
+            else{
+                $('[enabled=true]').attr('enabled',false);
+                $('#'+event).attr('enabled',true);
+            }
             break;
     }
 }

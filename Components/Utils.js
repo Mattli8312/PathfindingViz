@@ -84,6 +84,8 @@ async function Backtrack(cx,cy){
 function ResetPath(){
     $('[type=solved]').attr('type','tile');
     $('[type=passed]').attr('type','tile');
+    console.log($('[type=solved]').length);
+    console.log("reached")
 }
 
 /**Used for AStar heuristic */

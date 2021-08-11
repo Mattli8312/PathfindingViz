@@ -12,8 +12,6 @@ async function SolveMaze_Traversal(traversal, xi=1,yi=1,xf=2*width-1,yf=2*height
     let cx, cy;
 
     let dfs = traversal == 'DFS';
-    //First modify css of the cells
-    $('[type=tile]').addClass('animated');
 
     $('#'+yi+'a'+xi).attr('type','passed');
     
@@ -47,7 +45,7 @@ async function SolveMaze_Traversal(traversal, xi=1,yi=1,xf=2*width-1,yf=2*height
 
             }
         }
-        await new Promise(resolve => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 60/FPS));
     }
     $('[type=stacked]').attr('type','passed');
     //Back track;
@@ -55,7 +53,7 @@ async function SolveMaze_Traversal(traversal, xi=1,yi=1,xf=2*width-1,yf=2*height
         await Backtrack(cx,cy);
     }
     //Then demodify the cells;
-    $('.animated').removeClass('animated');
+    
 }
 
 /**Solves Maze or any graph structure using Dijkstra's pathfinding algorithm with a min heap */
@@ -67,7 +65,7 @@ async function SolveMaze_Dijkstra(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
     $('#'+yi+'a'+xi)
 
     //First modify css of the cells
-    $('[type=tile]').addClass('animated');
+    
 
     $('#'+yi+'a'+xi).attr('type','passed');
 
@@ -94,13 +92,13 @@ async function SolveMaze_Dijkstra(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
                 }
             }
         }
-        await new Promise(resolve => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 60/FPS));
     }
     if(cx == xf && cy == yf){
         await Backtrack(cx,cy);
     }
     //Then demodify the cells;
-    $('.animated').removeClass('animated');
+    
 }
 
 /** A* Pathfinding Algorithm */
@@ -117,7 +115,7 @@ async function SolveMaze_AStar(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
     });
 
     //First modify css of the cells
-    $('[type=tile]').addClass('animated');
+    
 
     while(!pq.empty()){
         let curr = pq.pop();
@@ -143,13 +141,13 @@ async function SolveMaze_AStar(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
                 }
             }
         }
-        await new Promise(resolve => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 60/FPS));
     }
     if(cx == xf && cy == yf){
         await Backtrack(cx,cy);
     }
     //Then demodify the cells;
-    $('.animated').removeClass('animated');
+    
 }
 
 async function SolveMaze_GBFS(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
@@ -164,7 +162,7 @@ async function SolveMaze_GBFS(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
     });
 
     //First modify css of the cells
-    $('[type=tile]').addClass('animated');
+    
 
     $('#'+yi+'a'+xi).attr('type','passed');
 
@@ -190,11 +188,11 @@ async function SolveMaze_GBFS(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
                 }
             }
         }
-        await new Promise(resolve => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 60/FPS));
     }
     if(cx == xf && cy == yf){
         await Backtrack(cx,cy);
     }
     //Then demodify the cells;
-    $('.animated').removeClass('animated');
+    
 }
