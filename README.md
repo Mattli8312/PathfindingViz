@@ -4,11 +4,11 @@
 
 Pathfinding Visualizer is a fun pathfinding simulator which contains numerous graphical UI features. This application was inspired by UIUC's Data structures course, specifically the final project in which we had to implement various graph traversal and pathfinding algorithms on certain data sets. Some of the important features this web application contains are
 
-    - Rendering walls/obstacles for the pathfinding grid
-    - Rendering specific shapes formed by walls including circles, lines, and squares (Bresenham's algorithms)
-    - Rendering Mazes using various approaches: Backtracking, Prim's Kruskal's etc.
-    - Simulating Pathfinding Algorithms: BFS, Dijkstra, A*, etc.
-    - Miscellanous: positioning start and end locations and controlling the speed at which the algorithms run
+- Rendering walls/obstacles for the pathfinding grid
+- Rendering specific shapes formed by walls including circles, lines, and squares (Bresenham's algorithms)
+- Rendering Mazes using various approaches: Backtracking, Prim's Kruskal's etc.
+- Simulating Pathfinding Algorithms: BFS, Dijkstra, A*, etc.
+- Miscellanous: positioning start and end locations and controlling the speed at which the algorithms run
 
 ## Installation/Running 
 
