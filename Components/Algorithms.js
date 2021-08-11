@@ -3,7 +3,7 @@
  * algorithms used for visualization
  */
 /**Solves Maze or any graph traversal using Depth First Search or Breadth First Search */
-async function SolveMaze_Traversal(traversal, xi=1,yi=1,xf=2*width-1,yf=2*height-1){
+async function SolveMaze_Traversal(traversal, xi=startnode.x,yi=startnode.y,xf=endnode.x,yf=endnode.y){
 
     ResetPath();
 
@@ -57,7 +57,7 @@ async function SolveMaze_Traversal(traversal, xi=1,yi=1,xf=2*width-1,yf=2*height
 }
 
 /**Solves Maze or any graph structure using Dijkstra's pathfinding algorithm with a min heap */
-async function SolveMaze_Dijkstra(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
+async function SolveMaze_Dijkstra(xi=startnode.x,yi=startnode.y,xf=endnode.x,yf=endnode.y){
     ResetPath();
     let pq = new PriorityQueue();
     let cx, cy;
@@ -94,6 +94,7 @@ async function SolveMaze_Dijkstra(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
         }
         await new Promise(resolve => setTimeout(resolve, 60/FPS));
     }
+    
     if(cx == xf && cy == yf){
         await Backtrack(cx,cy);
     }
@@ -102,7 +103,7 @@ async function SolveMaze_Dijkstra(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
 }
 
 /** A* Pathfinding Algorithm */
-async function SolveMaze_AStar(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
+async function SolveMaze_AStar(xi=startnode.x,yi=startnode.y,xf=endnode.x,yf=endnode.y){
     ResetPath();
     let pq = new PriorityQueue();
     let cx, cy;
@@ -143,6 +144,7 @@ async function SolveMaze_AStar(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
         }
         await new Promise(resolve => setTimeout(resolve, 60/FPS));
     }
+    $('[type=stacked]').attr('type','passed');
     if(cx == xf && cy == yf){
         await Backtrack(cx,cy);
     }
@@ -150,7 +152,7 @@ async function SolveMaze_AStar(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
     
 }
 
-async function SolveMaze_GBFS(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
+async function SolveMaze_GBFS(xi=startnode.x,yi=startnode.y,xf=endnode.x,yf=endnode.y){
     ResetPath();
     let pq = new PriorityQueue();
     let cx, cy;
@@ -171,12 +173,13 @@ async function SolveMaze_GBFS(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
         let curr_div = $('#'+curr.y+'a'+curr.x);
         curr_div.attr('prev',curr.prev);
         curr_div.attr('weight', curr.val);
+        curr_div.attr("type",'passed')
         cx = curr.x, cy = curr.y;
         if(cx == xf && cy == yf) break;
         for(let i = 0; i < 4; i++){
             let next_tile = $('#'+(curr.y+dy[i]/2) + 'a' + (curr.x+dx[i]/2));
             if(validDivIndx(curr.y+dy[i]/2, curr.x+dx[i]/2) && CanPass(curr.x,curr.y,curr.x+dx[i]/2,curr.y+dy[i]/2)){
-                if(next_tile.attr('type') != 'passed'){
+                if(next_tile.attr('type') == 'tile'){
                     pq.push(
                     {   
                         x:curr.x+dx[i]/2, 
@@ -184,15 +187,15 @@ async function SolveMaze_GBFS(xi=10,yi=10,xf=2*width-1,yf=2*height-1){
                         val: EuclideanDistance(xf,yf,curr.x+dx[i]/2,curr.y+dy[i]/2),
                         prev:curr_div.attr('id')
                     })
-                    next_tile.attr('type','passed');
+                    next_tile.attr('type','stacked');
                 }
             }
         }
         await new Promise(resolve => setTimeout(resolve, 60/FPS));
     }
+    $('[type=stacked]').attr('type','passed');
     if(cx == xf && cy == yf){
         await Backtrack(cx,cy);
     }
     //Then demodify the cells;
-    
 }

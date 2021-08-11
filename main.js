@@ -8,6 +8,14 @@ let mouse = {
     x: -1,
     y: -1
 }
+let startnode = {
+    x: width * 2 / 3,
+    y: height
+}
+let endnode = {
+    x: width * 4 / 3,
+    y: height
+}
 
 function InitializeGrid(){
     for(let a = 0; a < height*2 + 1; a++){
@@ -15,11 +23,25 @@ function InitializeGrid(){
             let y_ = a, x_ = b;
             let tile = $("<div type=tile></div>").attr('id', y_+'a'+x_);
             tile.width(cellSize); tile.height(cellSize);
+            if(a == startnode.y && b == startnode.x){ tile.attr('position','start') };
+            if(a == endnode.y && b == endnode.x){ tile.attr('position', 'end')};
             tile.on("mouseup mouseover", ()=>{ 
+                if(current_draw_mode == 'start'){
+                    $('[position=start]').removeAttr('position');
+                    tile.attr('position','start');
+                    startnode.x = mouse.x;
+                    startnode.y = mouse.y;
+                }
+                if(current_draw_mode == 'end'){
+                    $('[position=end]').removeAttr('position');
+                    tile.attr('position','end')
+                    endnode.x = mouse.x;
+                    endnode.y = mouse.y;
+                }
                 if(mouse_down && current_draw_mode == "scattered") 
                     tile.attr('type','wall')
-                mouse.x = x_;
-                mouse.y = y_;
+                    mouse.x = x_;
+                    mouse.y = y_;
                 }
             )
             $('#grid').append(tile);
@@ -42,9 +64,11 @@ async function ButtonHandler(event, callbackFunction, parameter = ""){
             ResetPath();
             $('button').attr('disabled',true);
             $('[type=tile]').addClass('animated');
-            if(parameter == "")
-                await callbackFunction();
-            else await callbackFunction(parameter);
+            if($('[position=start]').attr('type') != 'wall' && $('[position=end]').attr('type') != 'wall') {
+                if(parameter == "")
+                    await callbackFunction();
+                else await callbackFunction(parameter);
+            }
             $('button').attr('disabled',false);
             $('.animated').removeClass('animated');
             break;

@@ -177,9 +177,8 @@ window.addEventListener("mousedown", ()=>{
 window.addEventListener("mousemove", ()=> {
     if(mouse_down){
         if(current_draw_mode != 'scattered' && start.x < 0){
-            start.x = mouse.x,
-            start.y = mouse.y
-            console.log(start.y,start.x);
+            start.x = mouse.x;
+            start.y = mouse.y;
         }
         ClearPixels();
         switch(current_draw_mode){
@@ -194,6 +193,12 @@ window.addEventListener("mousemove", ()=> {
                 break;
             case "erase":
                 $('#'+mouse.y+'a'+mouse.x).attr('type','tile');
+                break;
+            case "start": 
+                $('#'+startnode.y+'a'+startnode.x).attr('type','start');
+                break;
+            case "end": 
+                $('#'+startnode.y+'a'+startnode.x).attr('type','start');
                 break;
             default:
                 start.x = start.y = -1;

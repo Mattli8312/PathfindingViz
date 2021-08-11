@@ -84,14 +84,25 @@ div[type="wall"]{
     background: black;
     border: none;
 }
+
 div[type="passed"]{
     background: teal;
+    border: none;
 }
 div[type="stacked"]{
     background: cyan;
+    border: none;
 }
 div[type="solved"]{
     background: purple;
+    border: none;
+}
+div[position="start"]{
+    background: red;
+    border: none;
+}
+div[position="end"]{
+    background: blue;
     border: none;
 }
 .animated{

@@ -43,6 +43,13 @@
                     <button type="button_a" onclick="ButtonHandler(0,SolveMaze_GBFS)">Greed Best-First Search</button>
                 </div>
             </ul>
+            <ul>
+                <button type="button_a" onclick="ButtonHandler('dropdown4')">Positions</button>
+                <div id="dropdown4" enabled="false">
+                    <button type="button_a" onclick="ButtonHandler(1,function(){},'start')">Start</button>
+                    <button type="button_a" onclick="ButtonHandler(1,function(){},'end')">End</button>
+                </div>
+            </ul>
         </div>
         <div id="controlpanel">
             <input class="slider" id="speed" onchange = "console.log('')" type="range" min="1", max="6", value="3">
