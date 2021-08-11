@@ -88,6 +88,7 @@ function ResetPath(){
     console.log("reached")
 }
 
+
 /**Used for AStar heuristic */
 function RoundedDistance(xi,yi,xf,yf){
     return Math.round(Math.sqrt(Math.pow(xi-xf,2)+Math.pow(yi-yf,2)));

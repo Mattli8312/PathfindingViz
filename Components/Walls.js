@@ -170,6 +170,7 @@ function ClearBoard(){
     $('div[type]').attr('type','tile');
 }
 
+
 window.addEventListener("mousedown", ()=>{
     mouse_down = true;
 })
