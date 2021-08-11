@@ -27,6 +27,7 @@ body{
 }
 #controlpanel{
     display: flex;
+    align-items: center;
 }
 #controlpanel input{
     width: 5vw;
