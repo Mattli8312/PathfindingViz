@@ -1,4 +1,4 @@
-# Pathfinding Visualizer [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Mattli8312/pathfindingviz/blob/master/LICENSE) ![JavaScript](https://img.shields.io/badge/-JavaScript-yellow.svg)
+# Pathfinding Visualizer [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Mattli8312/pathfindingviz/blob/master/LICENSE) ![HTML](https://img.shields.io/badge/-HTML-orange.svg) ![CSS](https://img.shields.io/badge/-CSS-blue.svg) ![JavaScript](https://img.shields.io/badge/-JavaScript-yellow.svg)
 
 ## Overview
 
