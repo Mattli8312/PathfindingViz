@@ -22,6 +22,23 @@ $ cd MyFolder
 $ git clone https://github.com/Mattli8312/pathfindingviz.git 
 ```
 
+## Testing
+
+For testing, I used npm's Jest module for unit testing the priority queue data structure implemented for the informed-search pathfinding algorithms. The operations
+that were tested for this data structure were:
+- Minimum/Maximum heapify
+- Popping
+- Returning correct key attributes (i.e. is the queue empty, can we pop more, return the front, etc.)
+- Edge case: stack underflow.
+
+To test the code, you can simply install jest using npm and execute accordingly
+
+```bash
+$ cd MyFolder
+$ npm install --save-dev jest
+$ npm test
+```
+
 ## Using the Application/ Potential Questions
 
 1. **Setting the start and end points**
